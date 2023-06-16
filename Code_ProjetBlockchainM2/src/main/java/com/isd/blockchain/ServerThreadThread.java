@@ -59,10 +59,6 @@ public class ServerThreadThread extends Thread {
 					}
 					if (jsonObject.containsKey("transaction")) {//Le fichier contient une transaction envoyee par un wallet
 						System.out.println("transaction entrante");
-						/*System.out.println("destinataire "+jsonObject.getString("destinataire"));
-						System.out.println("username "+jsonObject.getString("username"));
-						System.out.println("montant "+jsonObject.getString("montant"));
-						System.out.println("NoeudDest "+jsonObject.getString("NoeudDest"));*/
 						
 						//récuperation de la cle publique
 						byte[] publicKeyBytes = Base64.getDecoder().decode(jsonObject.getString("publicKey"));
@@ -73,9 +69,6 @@ public class ServerThreadThread extends Thread {
 						
 						//recuperation de la signature
 						byte[] sig =Base64.getDecoder().decode(jsonObject.getString("sig"));
-						
-						//System.out.println("senderAddress "+jsonObject.getString("senderAddress"));
-						//System.out.println("recipientAddress "+jsonObject.getString("recipientAddress"));
 						
 						//ajout de la transaction dans le pool des transactions
 						Transaction t= new Transaction(jsonObject.getString("username"), 

@@ -21,13 +21,15 @@ import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.util.encoders.Hex;
 
 public class P2pkh {
-	
+	// Verify method checks the authenticity of the transaction
 	public static boolean verify(byte[]sig,PublicKey publicKey,String ownerAdress,String sender, String destinataire, double montant) throws InvalidKeyException, NoSuchAlgorithmException, SignatureException, InvalidKeySpecException {
 		if(ownerAdress.equals("")) {
 			return true;
 		}
 		Stack<String> pile = new Stack<String>();
+		// Encoding signature and publicKey and appending to create scriptSig
 		String scriptSig =Base64.getEncoder().encodeToString(sig) + " " + Base64.getEncoder().encodeToString(publicKey.getEncoded()) + " " ;
+		// Creating scriptPubKey
 		String scriptPubKey = "OP_DUP OP_HASH160 " + ownerAdress + " OP_EQUALVERIFY OP_CHECKSIG";
 		String[] commandes = (scriptSig + scriptPubKey).split(" ");
 		//System.out.println("----------SCRIPT---------------------------------------------------------------------------------");
@@ -59,7 +61,7 @@ public class P2pkh {
 		}
 		return false;
 	}
-	
+	// This method executes Bitcoin Script opcodes
 	private static void exec_command(String s, Stack<String> pile,String sender, String destinataire, double montant) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, InvalidKeySpecException {
 		String val = "";
 		String pubKey = "";
@@ -67,7 +69,7 @@ public class P2pkh {
 		byte[] pubKeyBytes = pubKey.getBytes();
 		byte[] sigBytes = sig.getBytes();
 		String hash = "";
-		
+		// Following cases handle different OP codes of Bitcoin Script
 		switch(s){
 			case "OP_DUP":
 				val = pile.peek();
