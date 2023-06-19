@@ -87,6 +87,7 @@ public class ServerThread extends Thread {
 	
 	}
 	
+	// Function to broadcast a message to all connected peers
 	public void sendMessage (String message,Socket socket) {
 	
 		try { 
@@ -100,7 +101,6 @@ public class ServerThread extends Thread {
 		} catch(Exception e) { e.printStackTrace(); }
 	
 	}
-	
 	
 	
 	public Set<ServerThreadThread> getServerThreadThreads() { return serverThreadThreads; }
